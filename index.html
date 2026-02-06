@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Premium To-Do</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-theme="light">
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <h1>Premium To-Do</h1>
+            <p>Minimal clarity. Maximum momentum.</p>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="mode-toggle">
+            <span>Theme</span>
+            <button id="themeToggle" class="pill" type="button" aria-pressed="false">
+              Light
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <main class="app-grid">
+        <section class="panel input-panel" aria-label="Task input">
+          <div class="panel-header">
+            <h2>Create task</h2>
+            <p>Press Enter to add quickly.</p>
+          </div>
+          <form id="taskForm" autocomplete="off">
+            <label class="field">
+              <span>Task name</span>
+              <input
+                id="taskTitle"
+                name="title"
+                type="text"
+                placeholder="Ship the next polished milestone"
+                required
+              />
+            </label>
+            <label class="field">
+              <span>Category</span>
+              <select id="taskCategory" name="category">
+                <option value="Work">Work</option>
+                <option value="Personal">Personal</option>
+                <option value="Wellbeing">Wellbeing</option>
+                <option value="Finance">Finance</option>
+              </select>
+            </label>
+            <label class="field">
+              <span>Priority</span>
+              <div class="segmented" role="group" aria-label="Priority">
+                <button type="button" class="segmented-btn" data-priority="low">Low</button>
+                <button type="button" class="segmented-btn is-active" data-priority="medium">
+                  Medium
+                </button>
+                <button type="button" class="segmented-btn" data-priority="high">High</button>
+              </div>
+            </label>
+            <label class="field">
+              <span>Due date</span>
+              <input id="taskDue" name="due" type="date" />
+            </label>
+            <label class="field">
+              <span>Tags</span>
+              <input
+                id="taskTags"
+                name="tags"
+                type="text"
+                placeholder="Design, Client, Sprint"
+              />
+            </label>
+            <button class="primary" type="submit">Add task</button>
+          </form>
+          <div class="shortcuts">
+            <h3>Keyboard shortcuts</h3>
+            <ul>
+              <li><span>Enter</span> Add task</li>
+              <li><span>Delete</span> Remove selected task</li>
+              <li><span>Ctrl + Drag</span> Duplicate task</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="panel list-panel" aria-label="Task list">
+          <div class="panel-header">
+            <div>
+              <h2>Today</h2>
+              <p id="summaryText">0 tasks · 0% complete</p>
+            </div>
+            <div class="search-field">
+              <input id="searchInput" type="search" placeholder="Search tasks" />
+            </div>
+          </div>
+          <div class="progress-wrap" aria-live="polite">
+            <div class="progress-bar">
+              <div id="progressFill"></div>
+            </div>
+            <span id="progressLabel">0%</span>
+          </div>
+          <div class="filters">
+            <div class="filter-group">
+              <label>Status</label>
+              <div class="pill-group" id="statusFilters">
+                <button class="pill is-active" data-status="all" type="button">All</button>
+                <button class="pill" data-status="active" type="button">Active</button>
+                <button class="pill" data-status="completed" type="button">Completed</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label>Priority</label>
+              <div class="pill-group" id="priorityFilters">
+                <button class="pill is-active" data-priority="all" type="button">All</button>
+                <button class="pill" data-priority="high" type="button">High</button>
+                <button class="pill" data-priority="medium" type="button">Medium</button>
+                <button class="pill" data-priority="low" type="button">Low</button>
+              </div>
+            </div>
+            <div class="filter-group">
+              <label>Category</label>
+              <div class="pill-group" id="categoryFilters"></div>
+            </div>
+          </div>
+          <div id="taskList" class="task-list" role="list"></div>
+          <div class="empty-state" id="emptyState">
+            <p>Drag tasks to reorder. Stay focused.</p>
+          </div>
+          <div class="undo" id="undoSnackbar" role="status" aria-live="polite">
+            <span>Task deleted</span>
+            <button type="button" id="undoDelete">Undo</button>
+          </div>
+        </section>
+
+        <section class="panel stats-panel" aria-label="Task statistics">
+          <div class="panel-header">
+            <h2>Insights</h2>
+            <p>Momentum snapshot</p>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <h3>Total</h3>
+              <p id="totalCount">0</p>
+              <span>Tasks created</span>
+            </div>
+            <div class="stat-card">
+              <h3>Completed</h3>
+              <p id="completedCount">0</p>
+              <span>Checked off</span>
+            </div>
+            <div class="stat-card">
+              <h3>Overdue</h3>
+              <p id="overdueCount">0</p>
+              <span>Needs attention</span>
+            </div>
+            <div class="stat-card">
+              <h3>Streak</h3>
+              <p id="streakCount">0</p>
+              <span>Days on track</span>
+            </div>
+          </div>
+          <div class="chart">
+            <div class="chart-bars" id="chartBars"></div>
+            <div class="chart-labels">
+              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
+            </div>
+          </div>
+          <div class="category-panel">
+            <div class="panel-header">
+              <h3>Categories</h3>
+              <p>Drag to reorder</p>
+            </div>
+            <div id="categoryList" class="category-list" role="list"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <script src="app.js"></script>
+  </body>
+</html>
