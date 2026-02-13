@@ -96,6 +96,12 @@ body {
   color: var(--muted);
 }
 
+.brand .author {
+  font-size: 12px;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
 .app-shell[data-theme="dark"] .brand p {
   color: #c0c0c0;
 }
