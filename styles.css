@@ -360,6 +360,14 @@ body {
   overflow: hidden;
 }
 
+[data-theme="dark"] .progress-bar {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+[data-theme="dark"] #progressLabel {
+  color: #ffffff;
+}
+
 .progress-bar div {
   height: 100%;
   background: linear-gradient(90deg, var(--accent), var(--success));
